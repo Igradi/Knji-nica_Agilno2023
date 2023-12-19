@@ -43,4 +43,33 @@ const register = async (req, res, next) => {
   }
 };
 
-module.exports = { register };
+
+const login = async (req, res) => {
+  try {
+    const { email, password } = req.body;
+    const user = await UserModel.findOne({ email });
+    console.log(password)
+    if (user) {
+      const isPasswordMatch = await user.matchPassword(password);
+      if (isPasswordMatch) {
+        const token = createToken(user._id);
+        res.cookie("jwt", token, {
+          httpOnly: false,
+          maxAge: 86400000,
+        });
+        res.status(200).json({ user: user._id, authenticated: true });
+      } else {
+        throw Error("incorrect password");
+      }
+    } else {
+      throw Error("incorrect email");
+    }
+  } catch (err) {
+    console.log('catch')
+    console.error(err);
+    const errors = handleErrors(err);
+    res.json({ errors });
+  }
+};
+
+module.exports = { register, login };
