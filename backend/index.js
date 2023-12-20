@@ -4,6 +4,7 @@ const cors = require("cors");
 const cookieParser = require("cookie-parser");
 const registerRoute = require("./routes/RegisterRoute");
 const loginRoute = require("./routes/LoginRoute");
+const getUserInfoRoute = require("./routes/GetUserInfoRoute");
 
 const app = express();
 
@@ -31,3 +32,4 @@ app.use(cookieParser());
 app.use(express.json());
 app.use("/", registerRoute);
 app.use("/", loginRoute)
+app.use("/", getUserInfoRoute)
