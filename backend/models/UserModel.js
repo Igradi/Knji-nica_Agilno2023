@@ -6,7 +6,8 @@ const userSchema = new mongoose.Schema({
   lastName: { type: String },
   email: { type: String, unique: true },
   password: { type: String },
-  admin: { type: Boolean, default: false },
+  enum: ["admin", "user", "knjiznicar"],
+  default: "user",
 });
 
 userSchema.pre("save", async function () {
@@ -14,9 +15,9 @@ userSchema.pre("save", async function () {
   this.password = await bcrypt.hash(this.password, salt);
 });
 
-userSchema.methods.matchPassword = async function (enteredPassword){
-  return await bcrypt.compare(enteredPassword, this.password);
-}
 
+userSchema.methods.matchPassword = async function (enteredPassword) {
+  return await bcrypt.compare(enteredPassword, this.password);
+};
 
 module.exports = mongoose.model("Users", userSchema);
