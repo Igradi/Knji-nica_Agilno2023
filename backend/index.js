@@ -5,6 +5,8 @@ const cookieParser = require("cookie-parser");
 const registerRoute = require("./routes/RegisterRoute");
 const loginRoute = require("./routes/LoginRoute");
 const getUserByIdRoute = require("./routes/GetUserInfoRoute");
+const getAllUsersRoute = require("./routes/GetAllUsersRoute");
+const deleteUserByIdRoute = require("./routes/DeleteUserById");
 
 const app = express();
 
@@ -33,3 +35,5 @@ app.use(express.json());
 app.use("/", registerRoute);
 app.use("/", loginRoute);
 app.use("/", getUserByIdRoute);
+app.use("/", getAllUsersRoute);
+app.use("/", deleteUserByIdRoute);
