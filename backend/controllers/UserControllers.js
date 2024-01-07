@@ -74,24 +74,24 @@ const login = async (req, res) => {
 
 const getUserById = async (req, res) => {
   try {
-    const userId = req.body.id
+    const userId = req.params.id;
 
-    const user = await UserModel.findById(userId)
+    const user = await UserModel.findById(userId);
 
     if (!user) {
-      throw new Error('User not found')
+      throw new Error('User not found');
     }
 
     res.status(200).json({
       name: user.name,
       lastName: user.lastName,
       email: user.email,
-    })
+    });
   } catch (err) {
-    console.error(err)
-    res.status(500).json({ message: err.message })
+    console.error(err);
+    res.status(500).json({ message: err.message });
   }
-}
+};
 
 const getAllUsers = async (req, res) => {
   try {
@@ -117,4 +117,24 @@ const deleteUserById = async (req, res) => {
   }
 }
 
-module.exports = { register, login, getUserById, getAllUsers, deleteUserById }
+const updateUserById = async (req, res) => {
+  try {
+    const userId = req.params.id;
+    const updatedData = req.body;
+
+    const user = await UserModel.findById(userId);
+
+    if (!user) {
+      throw new Error('User not found');
+    }
+
+    const updatedUser = await UserModel.findByIdAndUpdate(userId, updatedData, { new: true });
+
+    res.status(200).json(updatedUser);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: err.message });
+  }
+};
+
+module.exports = { register, login, getUserById, getAllUsers, deleteUserById, updateUserById }

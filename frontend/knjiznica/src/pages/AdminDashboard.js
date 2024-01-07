@@ -37,7 +37,7 @@ const AdminDashboard = () => {
     };
 
     return (
-        <div className="container mx-auto my-8">
+        <div className="container mx-auto my-8 p-24">
             <h1 style={{ fontFamily: "'Pacifico', cursive", textDecoration: "none", backgroundClip: "text", color: "transparent", backgroundImage: "linear-gradient(to right, #34D399, #3B82F6, #8B5CF6)" }} className="text-3xl font-bold mb-4 text-center">Admin Dashboard - All Users</h1>
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
                 {users.map((user) => (
