@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import * as jwtDecode from 'jwt-decode';
 
 const UserProfile = () => {
     const [userData, setUserData] = useState({
@@ -10,11 +9,10 @@ const UserProfile = () => {
     });
 
     useEffect(() => {
+        const userId = localStorage.getItem('userId');
         const fetchUserData = async () => {
             try {
-                const token = document.cookie.split('; ').find(row => row.startsWith('jwt')).split('=')[1];
-                const decodedToken = jwtDecode(token);
-                const response = await axios.post('http://localhost:4000/getUserById', { id: decodedToken.id });
+                const response = await axios.get(`http://localhost:4000/users/${userId}`);
                 const { data } = response;
                 setUserData({
                     firstName: data.name,
@@ -32,6 +30,19 @@ const UserProfile = () => {
     const handleUpdate = async (e) => {
         e.preventDefault();
         try {
+            const userId = localStorage.getItem('userId');
+            const response = await axios.post(`http://localhost:4000/users/${userId}`, {
+                name: userData.firstName,
+                lastName: userData.lastName,
+                email: userData.email
+            });
+            const updatedUserData = response.data;
+
+            setUserData({
+                firstName: updatedUserData.name,
+                lastName: updatedUserData.lastName,
+                email: updatedUserData.email
+            });
         } catch (error) {
             console.log(error);
         }
@@ -39,9 +50,8 @@ const UserProfile = () => {
 
     const { firstName, lastName, email } = userData;
 
-
     return (
-        <div className="bg-gray-200 min-h-screen pb-24">
+        <div className="bg-gray-200 min-h-screen p-24">
             <header className="px-6 bg-white flex flex-wrap items-center lg:py-0 py-2">
             </header>
             <div className="container mx-auto max-w-3xl mt-8">
