@@ -7,6 +7,7 @@ const loginRoute = require("./routes/LoginRoute");
 const getUserByIdRoute = require("./routes/GetUserInfoRoute");
 const getAllUsersRoute = require("./routes/GetAllUsersRoute");
 const deleteUserByIdRoute = require("./routes/DeleteUserById");
+const addBook = require("./routes/AddBook");
 
 const app = express();
 
@@ -37,3 +38,4 @@ app.use("/", loginRoute);
 app.use("/", getUserByIdRoute);
 app.use("/", getAllUsersRoute);
 app.use("/", deleteUserByIdRoute);
+app.use("/", addBook);
