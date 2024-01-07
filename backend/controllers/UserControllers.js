@@ -1,121 +1,120 @@
-const UserModel = require("../models/UserModel");
-const jwt = require("jsonwebtoken");
+const UserModel = require('../models/UserModel')
+const jwt = require('jsonwebtoken')
 
-const PRIVATE_KEY = "AGILNO";
+const PRIVATE_KEY = 'AGILNO'
 
 const createToken = (id) => {
   return jwt.sign({ id }, PRIVATE_KEY, {
-    expiresIn: "24h",
-  });
-};
+    expiresIn: '24h',
+  })
+}
 
 const handleErrors = (err) => {
-  let errors = { msg: "" };
+  let errors = { msg: '' }
 
-  if (err.message === "incorrect email") {
-    errors.msg = "That email is not registered";
+  if (err.message === 'incorrect email') {
+    errors.msg = 'That email is not registered'
   }
 
-  if (err.message === "incorrect password") {
-    errors.msg = "That password is incorrect";
+  if (err.message === 'incorrect password') {
+    errors.msg = 'That password is incorrect'
   }
 
   if (err.code === 11000) {
-    errors.msg = "Email is already registered";
+    errors.msg = 'Email is already registered'
   }
-  return errors;
-};
+  return errors
+}
 
 const register = async (req, res, next) => {
   try {
-    const { email, password, name, lastName } = req.body;
-    const user = await UserModel.create({ email, password, name, lastName });
-    const token = createToken(user._id);
-    res.cookie("jwt", token, {
+    const { email, password, name, lastName } = req.body
+    const user = await UserModel.create({ email, password, name, lastName })
+    const token = createToken(user._id)
+    res.cookie('jwt', token, {
       httpOnly: false,
       maxAge: 86400000,
-    });
-    res.status(201).json({ user: user._id, created: true });
+    })
+    res.status(201).json({ user: user._id, created: true })
   } catch (err) {
-    console.log(err);
-    const errors = handleErrors(err);
-    res.json({ errors });
+    console.log(err)
+    const errors = handleErrors(err)
+    res.json({ errors })
   }
-};
-
+}
 
 const login = async (req, res) => {
   try {
-    const { email, password } = req.body;
-    const user = await UserModel.findOne({ email });
-    console.log(password)
+    const { email, password } = req.body
+    const user = await UserModel.findOne({ email })
     if (user) {
-      const isPasswordMatch = await user.matchPassword(password);
+      const isPasswordMatch = await user.matchPassword(password)
       if (isPasswordMatch) {
-        const token = createToken(user._id);
-        res.cookie("jwt", token, {
-          httpOnly: false,
-          maxAge: 86400000,
-        });
-        res.status(200).json({ user: user._id, authenticated: true });
+        const token = createToken(user._id)
+
+        res.status(200).json({
+          user: user._id,
+          role: user.role,
+          authenticated: true,
+          token: token,
+        })
       } else {
-        throw Error("incorrect password");
+        throw Error('incorrect password')
       }
     } else {
-      throw Error("incorrect email");
+      throw Error('incorrect email')
     }
   } catch (err) {
     console.log('catch')
-    console.error(err);
-    const errors = handleErrors(err);
-    res.json({ errors });
+    console.error(err)
+    const errors = handleErrors(err)
+    res.json({ errors })
   }
-};
+}
 
 const getUserById = async (req, res) => {
   try {
-    const userId = req.body.id;
+    const userId = req.body.id
 
-    const user = await UserModel.findById(userId);
+    const user = await UserModel.findById(userId)
 
     if (!user) {
-      throw new Error('User not found');
+      throw new Error('User not found')
     }
 
     res.status(200).json({
       name: user.name,
       lastName: user.lastName,
       email: user.email,
-    });
+    })
   } catch (err) {
-    console.error(err);
-    res.status(500).json({ message: err.message });
+    console.error(err)
+    res.status(500).json({ message: err.message })
   }
-};
+}
 
 const getAllUsers = async (req, res) => {
   try {
-    const users = await UserModel.find({}, { password: 0 });
-    res.status(200).json(users);
+    const users = await UserModel.find({}, { password: 0 })
+    res.status(200).json(users)
   } catch (err) {
-    console.error(err);
-    res.status(500).json({ message: err.message });
+    console.error(err)
+    res.status(500).json({ message: err.message })
   }
-};
+}
 
 const deleteUserById = async (req, res) => {
   try {
-    const userId = req.params.id;
-    const user = await UserModel.findByIdAndDelete(userId);
+    const userId = req.params.id
+    const user = await UserModel.findByIdAndDelete(userId)
     if (!user) {
-      throw new Error('User not found');
+      throw new Error('User not found')
     }
-    res.status(200).json({ message: 'User deleted successfully' });
+    res.status(200).json({ message: 'User deleted successfully' })
   } catch (err) {
-    console.error(err);
-    res.status(500).json({ message: err.message });
+    console.error(err)
+    res.status(500).json({ message: err.message })
   }
-};
+}
 
-
-module.exports = { register, login, getUserById, getAllUsers, deleteUserById };
+module.exports = { register, login, getUserById, getAllUsers, deleteUserById }
