@@ -1,5 +1,6 @@
 import React from "react";
 import markoMarulic from "../images/markoMarulic.png";
+import { Link } from 'react-router-dom';
 
 const Navbar = () => {
   const jwtTokenCookie = localStorage.getItem("token") || null;
@@ -83,21 +84,22 @@ const Navbar = () => {
           </div>
         ) : (
           <div className="hidden lg:flex lg:flex-1 lg:justify-end">
-            <a
-              href="http://localhost:3000/profile"
+            <Link
+              to={`/profile/${localStorage.getItem('userId')}`}
               className="text-sm font-semibold leading-6 text-gray-900"
               style={{ marginRight: "10px" }}
             >
               Profil
-            </a>
-            <a
-              href="http://localhost:3000/login"
+            </Link>
+            <Link
+              to="/login"
               className="text-sm font-semibold leading-6 text-gray-900"
               onClick={handleOdjava}
             >
               Odjava <span aria-hidden="true">&rarr;</span>
-            </a>
+            </Link>
           </div>
+
         )}
       </nav>
 
