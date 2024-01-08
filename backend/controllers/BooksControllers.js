@@ -1,9 +1,9 @@
-const BookModel = require("../models/BookModel");
+const BookModel = require('../models/BookModel')
 
 const addBook = async (req, res) => {
   try {
     const { title, authorName, authorLastName, genre, description, image } =
-      req.body;
+      req.body
 
     const book = await BookModel.create({
       title,
@@ -12,20 +12,28 @@ const addBook = async (req, res) => {
       genre,
       description,
       image,
-    });
-    res
-      .status(200)
-      .json({
-        title: title,
-        authorName: authorName,
-        authorLastName: authorLastName,
-        genre: genre,
-        description: description,
-        image: image,
-      });
+    })
+    res.status(200).json({
+      title: title,
+      authorName: authorName,
+      authorLastName: authorLastName,
+      genre: genre,
+      description: description,
+      image: image,
+    })
   } catch (error) {
-    res.status(500).json({ message: err.message });
+    res.status(500).json({ message: err.message })
   }
-};
+}
 
-module.exports = { addBook };
+const getAllBooks = async (req, res) => {
+  try {
+    const books = await BookModel.find({})
+    res.status(200).json(books)
+  } catch (err) {
+    console.error(err)
+    res.status(500).json({ message: err.message })
+  }
+}
+
+module.exports = { addBook, getAllBooks }
