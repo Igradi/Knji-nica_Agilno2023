@@ -3,9 +3,11 @@ import axios from 'axios';
 import { FaEdit, FaTrash } from 'react-icons/fa';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { useNavigate } from 'react-router-dom';
 
 const AdminDashboard = () => {
     const [users, setUsers] = useState([]);
+    const navigate = useNavigate();
 
     useEffect(() => {
         const fetchUsers = async () => {
@@ -47,12 +49,11 @@ const AdminDashboard = () => {
                         <div className="mt-4 flex justify-between">
                             <button
                                 className="bg-blue-500 hover:bg-blue-600 text-white px-3 py-2 rounded-full focus:outline-none"
-                                onClick={() => {
-                                    // handle edit logic here
-                                }}
+                                onClick={() => navigate(`/profile/${user._id}`)}
                             >
                                 <FaEdit />
                             </button>
+
                             <button
                                 className="bg-red-500 hover:bg-red-600 text-white px-3 py-2 rounded-full focus:outline-none"
                                 onClick={() => handleDelete(user._id)}

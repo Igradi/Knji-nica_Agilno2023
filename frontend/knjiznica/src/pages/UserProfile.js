@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import { useParams } from 'react-router-dom';
 
 const UserProfile = () => {
     const [userData, setUserData] = useState({
@@ -8,8 +9,9 @@ const UserProfile = () => {
         email: ''
     });
 
+    const { userId } = useParams();
+
     useEffect(() => {
-        const userId = localStorage.getItem('userId');
         const fetchUserData = async () => {
             try {
                 const response = await axios.get(`http://localhost:4000/users/${userId}`);
@@ -25,13 +27,12 @@ const UserProfile = () => {
         };
 
         fetchUserData();
-    }, []);
+    }, [userId]);
 
     const handleUpdate = async (e) => {
         e.preventDefault();
         try {
-            const userId = localStorage.getItem('userId');
-            const response = await axios.post(`http://localhost:4000/users/${userId}`, {
+            const response = await axios.put(`http://localhost:4000/users/${userId}`, {
                 name: userData.firstName,
                 lastName: userData.lastName,
                 email: userData.email
