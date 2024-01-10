@@ -1,6 +1,7 @@
 import React from "react";
 import { useForm } from "react-hook-form";
 import axios from "axios";
+import { toast } from "react-toastify";
 
 export function SignUp() {
   const { register, handleSubmit } = useForm();
@@ -13,6 +14,16 @@ export function SignUp() {
         },
         { withCredentials: true }
       );
+      toast("You have successfully registered", {
+        position: "top-center",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "dark",
+      });
       console.log(data);
     } catch (error) {
       console.log(error);

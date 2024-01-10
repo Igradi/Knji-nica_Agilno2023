@@ -8,6 +8,7 @@ import AdminDashboard from "./pages/AdminDashboard";
 import Navbar from "./components/Navbar";
 import { AddBook } from "./pages/AddBook";
 import { BookList } from "./pages/BookList";
+import { ToastContainer } from "react-toastify";
 import { BookDetails } from "./pages/BookDetails";
 
 function App() {
@@ -25,6 +26,7 @@ function App() {
           <Route path="/books" element={<BookList />} />
           <Route path="/bookdetails/:id" element={<BookDetails />} />
         </Routes>
+        <ToastContainer />
       </BrowserRouter>
     </div>
   );
