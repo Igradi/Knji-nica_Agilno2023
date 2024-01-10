@@ -32,7 +32,7 @@ const UserProfile = () => {
     const handleUpdate = async (e) => {
         e.preventDefault();
         try {
-            const response = await axios.put(`http://localhost:4000/users/${userId}`, {
+            const response = await axios.post(`http://localhost:4000/users/${userId}`, {
                 name: userData.firstName,
                 lastName: userData.lastName,
                 email: userData.email

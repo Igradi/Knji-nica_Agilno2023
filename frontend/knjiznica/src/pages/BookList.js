@@ -47,7 +47,7 @@ export function BookList() {
           backgroundImage:
             'linear-gradient(to right, #34D399, #3B82F6, #8B5CF6)',
         }}
-        className='text-3xl font-bold mb-4 text-center'
+        className='text-3xl font-bold mb-4 text-center h-10'
       >
         Pregled svih knjiga
       </h1>
@@ -64,20 +64,20 @@ export function BookList() {
               {/* za detalje knjige  */}
               <button
                 className='bg-blue-500 hover:bg-blue-600 text-white px-3 py-2 rounded-full focus:outline-none'
-                // onClick={() => navigate(`/profile/${user._id}`)}
+              // onClick={() => navigate(`/profile/${user._id}`)}
               >
                 Detalji
               </button>
 
               <button
                 className='bg-green-500 hover:bg-green-600 text-white px-3 py-2 rounded-full focus:outline-none'
-                // onClick={() => navigate(`/profile/${user._id}`)}
+              // onClick={() => navigate(`/profile/${user._id}`)}
               >
                 Iznajmi
               </button>
 
               {/* samo za rolu knjiznicar */}
-               {/* <button
+              {/* <button
                 className='bg-red-500 hover:bg-red-600 text-white px-3 py-2 rounded-full focus:outline-none'
                 // onClick={() => handleDelete(book._id)}
               >
