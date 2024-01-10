@@ -12,6 +12,7 @@ const UserProfile = () => {
 
   const { userId } = useParams();
 
+<<<<<<< HEAD
   useEffect(() => {
     const fetchUserData = async () => {
       try {
@@ -27,6 +28,44 @@ const UserProfile = () => {
       } catch (error) {
         console.log(error);
       }
+=======
+    useEffect(() => {
+        const fetchUserData = async () => {
+            try {
+                const response = await axios.get(`http://localhost:4000/users/${userId}`);
+                const { data } = response;
+                setUserData({
+                    firstName: data.name,
+                    lastName: data.lastName,
+                    email: data.email
+                });
+            } catch (error) {
+                console.log(error);
+            }
+        };
+
+        fetchUserData();
+    }, [userId]);
+
+    const handleUpdate = async (e) => {
+        e.preventDefault();
+        try {
+            const response = await axios.post(`http://localhost:4000/users/${userId}`, {
+                name: userData.firstName,
+                lastName: userData.lastName,
+                email: userData.email
+            });
+            const updatedUserData = response.data;
+
+            setUserData({
+                firstName: updatedUserData.name,
+                lastName: updatedUserData.lastName,
+                email: updatedUserData.email
+            });
+        } catch (error) {
+            console.log(error);
+        }
+>>>>>>> 0b2abad842a05b9250c2a744385c70259d2e3845
     };
 
     fetchUserData();
