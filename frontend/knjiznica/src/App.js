@@ -10,6 +10,7 @@ import { AddBook } from "./pages/AddBook";
 import { BookList } from "./pages/BookList";
 import { BookDetails } from "./pages/BookDetails";
 import { EditBookDetails } from "./pages/EditBookDetails";
+import { ToastContainer } from "react-toastify";
 
 function App() {
   return (
@@ -28,6 +29,7 @@ function App() {
           <Route path="/editbookdetails/:id" element={<EditBookDetails />} />
         </Routes>
       </BrowserRouter>
+      <ToastContainer />
     </div>
   );
 }

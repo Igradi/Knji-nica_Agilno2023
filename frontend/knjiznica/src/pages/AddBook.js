@@ -1,5 +1,6 @@
 import axios from "axios";
 import React, { useState } from "react";
+import { toast, Bounce } from "react-toastify";
 
 export function AddBook() {
   const [bookData, setBookData] = useState({
@@ -16,7 +17,17 @@ export function AddBook() {
       const { data } = await axios.post("http://localhost:4000/addbook", {
         ...bookData,
       });
-      console.log(data);
+      toast.success("Knjiga je dodana!", {
+        position: "top-center",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+        transition: Bounce,
+      });
     } catch (error) {
       console.log(error);
     }
