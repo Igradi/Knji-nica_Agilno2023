@@ -1,6 +1,7 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import { toast, Bounce } from "react-toastify";
 
 export function EditBookDetails() {
   const params = useParams();
@@ -32,6 +33,17 @@ export function EditBookDetails() {
         `http://localhost:4000/editbookdetails/${params.id}`,
         { ...bookData }
       );
+      toast.success("Podatci su ažurirani!", {
+        position: "top-center",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+        transition: Bounce,
+      });
       console.log(data);
     } catch (error) {
       console.log(error);
