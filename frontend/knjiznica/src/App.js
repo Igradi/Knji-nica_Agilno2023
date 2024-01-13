@@ -9,6 +9,7 @@ import Navbar from "./components/Navbar";
 import { AddBook } from "./pages/AddBook";
 import { BookList } from "./pages/BookList";
 import { BookDetails } from "./pages/BookDetails";
+import { EditBookDetails } from "./pages/EditBookDetails";
 
 function App() {
   return (
@@ -24,6 +25,7 @@ function App() {
           <Route path="/addbook" element={<AddBook />} />
           <Route path="/books" element={<BookList />} />
           <Route path="/bookdetails/:id" element={<BookDetails />} />
+          <Route path="/editbookdetails/:id" element={<EditBookDetails />} />
         </Routes>
       </BrowserRouter>
     </div>

@@ -46,4 +46,28 @@ const getBook = async (req, res) => {
   }
 };
 
-module.exports = { addBook, getAllBooks, getBook };
+const updateBookDetails = async (req, res) => {
+  try {
+    const { title, authorName, authorLastName, genre, description, image } =
+      req.body;
+    const id = req.params.id;
+    console.log(title);
+    const updateBook = await BookModel.findByIdAndUpdate(
+      id,
+      {
+        title: title,
+        authorName: authorName,
+        authorLastName: authorLastName,
+        genre: genre,
+        description: description,
+        image: image,
+      },
+      { new: true }
+    );
+    res.status(200).json(updateBook);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
+module.exports = { addBook, getAllBooks, getBook, updateBookDetails };

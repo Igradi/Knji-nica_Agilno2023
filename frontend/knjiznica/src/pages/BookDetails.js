@@ -1,11 +1,12 @@
 import React, { useState } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useEffect } from "react";
 import axios from "axios";
 
 export function BookDetails() {
   const params = useParams();
   const [book, setBook] = useState();
+  const navigate = useNavigate();
   useEffect(() => {
     const fetchBooks = async () => {
       try {
@@ -80,6 +81,12 @@ export function BookDetails() {
             </dd>
           </div>
         </dl>
+        <button
+          className="text-white bg-indigo-700 hover:bg-indigo-800 focus:ring-4 focus:outline-none focus:ring-indigo-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-indigo-600 dark:hover:bg-indigo-700 dark:focus:ring-indigo-800"
+          onClick={() => navigate(`/editbookdetails/${params.id}`)}
+        >
+          Edit
+        </button>
       </div>
     </div>
   ) : null;

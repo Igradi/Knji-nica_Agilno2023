@@ -11,6 +11,7 @@ const addBook = require("./routes/AddBook");
 const getAllBooksRoute = require("./routes/GetAllBooksRoute");
 const updateUserByIdRoute = require("./routes/UpdateUserById");
 const getBook = require("./routes/GetBook");
+const updateBookDetails = require("./routes/UpdateBookDetails");
 
 const app = express();
 
@@ -46,3 +47,4 @@ app.use("/", updateUserByIdRoute);
 app.use("/", updateUserByIdRoute);
 app.use("/", getAllBooksRoute);
 app.use("/", getBook);
+app.use("/", updateBookDetails);
