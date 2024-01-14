@@ -1,3 +1,5 @@
+import { useEffect } from 'react';
+import { useNavigate, useLocation } from 'react-router-dom';
 import "./App.css";
 import { SignUp } from "./pages/SignUp";
 import Login from "./pages/Login";
@@ -28,10 +30,25 @@ function App() {
           <Route path="/bookdetails/:id" element={<BookDetails />} />
           <Route path="/editbookdetails/:id" element={<EditBookDetails />} />
         </Routes>
+        <ProtectedRoutes />
       </BrowserRouter>
       <ToastContainer />
     </div>
   );
+}
+
+function ProtectedRoutes() {
+  const navigate = useNavigate();
+  const location = useLocation();
+
+  useEffect(() => {
+    const token = localStorage.getItem('token');
+    if (!token && !['/', '/register', '/login'].includes(location.pathname)) {
+      navigate('/login');
+    }
+  }, [location]);
+
+  return null;
 }
 
 export default App;
