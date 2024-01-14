@@ -88,7 +88,7 @@ export function BookList() {
           backgroundImage:
             'linear-gradient(to right, #34D399, #3B82F6, #8B5CF6)',
         }}
-        className='text-3xl font-bold mb-4 text-center'
+        className="text-3xl font-bold mb-4 text-center h-[50px]"
       >
         Pregled svih knjiga
       </h1>
@@ -101,7 +101,7 @@ export function BookList() {
             placeholder='Search'
             onChange={(e) => setValue(e.target.value)}
           />
-          <button className='text-white bg-indigo-700 hover:bg-indigo-800 focus:ring-4 focus:outline-none focus:ring-indigo-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-indigo-600 dark:hover:bg-indigo-700 dark:focus:ring-indigo-800'>
+          <button className="text-white bg-indigo-700 hover:bg-indigo-800 focus:ring-4 focus:outline-none focus:ring-indigo-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-indigo-600 dark:hover:bg-indigo-700 dark:focus:ring-indigo-800 mx-4">
             Search
           </button>
         </form>
