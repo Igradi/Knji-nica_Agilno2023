@@ -43,8 +43,13 @@ function ProtectedRoutes() {
 
   useEffect(() => {
     const token = localStorage.getItem('token');
+    const role = localStorage.getItem('role');
     if (!token && !['/', '/register', '/login'].includes(location.pathname)) {
       navigate('/login');
+    } else if (location.pathname === '/admin' && role !== 'admin') {
+      navigate('/');
+    } else if (location.pathname === '/addbook' && !['admin', 'knjižničar'].includes(role)) {
+      navigate('/');
     }
   }, [location]);
 
