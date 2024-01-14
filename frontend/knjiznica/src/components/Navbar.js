@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 
 const Navbar = () => {
   const jwtTokenCookie = localStorage.getItem('token') || null;
+  const role = localStorage.getItem('role');
 
   const handleOdjava = () => {
     localStorage.removeItem('token');
@@ -52,9 +53,11 @@ const Navbar = () => {
               <a href='/books' className='text-sm font-semibold leading-6 text-gray-900'>
                 Knjige
               </a>
-              <a href='/addbook' className='text-sm font-semibold leading-6 text-gray-900'>
-                Dodaj knjigu
-              </a>
+              {['admin', 'knjiznicar'].includes(role) && (
+                <a href='/addbook' className='text-sm font-semibold leading-6 text-gray-900'>
+                  Dodaj knjigu
+                </a>
+              )}
             </>
           )}
         </div>
@@ -64,7 +67,7 @@ const Navbar = () => {
               Registracija <span aria-hidden='true' style={{ marginRight: '10px' }}></span>
             </a>
             <a href='/login' className='text-sm font-semibold leading-6 text-gray-900'>
-              Prijava <span aria-hidden='true'>&rarr;</span>
+              Prijava <span aria-hidden='true'>→</span>
             </a>
           </div>
         ) : (
@@ -81,7 +84,7 @@ const Navbar = () => {
               className='text-sm font-semibold leading-6 text-gray-900'
               onClick={handleOdjava}
             >
-              Odjava <span aria-hidden='true'>&rarr;</span>
+              Odjava <span aria-hidden='true'>→</span>
             </Link>
           </div>
         )}
@@ -152,7 +155,7 @@ const Navbar = () => {
                   href='/login'
                   className='text-sm font-semibold leading-6 text-gray-900'
                 >
-                  Prijava <span aria-hidden='true'>&rarr;</span>
+                  Prijava <span aria-hidden='true'>→</span>
                 </a>
               </div>
             </div>

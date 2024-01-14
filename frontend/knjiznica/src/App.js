@@ -48,7 +48,7 @@ function ProtectedRoutes() {
       navigate('/login');
     } else if (location.pathname === '/admin' && role !== 'admin') {
       navigate('/');
-    } else if (location.pathname === '/addbook' && !['admin', 'knjižničar'].includes(role)) {
+    } else if (location.pathname === '/addbook' && !['admin', 'knjiznicar'].includes(role)) {
       navigate('/');
     }
   }, [location]);
