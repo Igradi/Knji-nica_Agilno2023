@@ -1,7 +1,10 @@
-const { getAllBooks } = require('../controllers/BooksControllers')
+const {
+  getAllBooks,
+  getBookByTitle,
+} = require("../controllers/BooksControllers");
 
-const router = require('express').Router()
+const router = require("express").Router();
 
-router.get('/books', getAllBooks)
+router.get("/books", getAllBooks).post("/books", getBookByTitle);
 
-module.exports = router
+module.exports = router;

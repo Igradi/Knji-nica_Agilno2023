@@ -7,6 +7,7 @@ import { useNavigate } from "react-router-dom";
 export function BookList() {
   const [books, setBooks] = useState([]);
   const navigate = useNavigate();
+  const [value, setValue] = useState();
 
   useEffect(() => {
     const fetchBooks = async () => {
@@ -37,6 +38,17 @@ export function BookList() {
   //     }
   // };
 
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      const { data } = await axios.post("http://localhost:4000/books", {
+        value,
+      });
+      setBooks(data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
   return (
     <div className="container mx-auto my-8 p-24">
       <h1
@@ -52,6 +64,20 @@ export function BookList() {
       >
         Pregled svih knjiga
       </h1>
+      <div className="mb-3 ">
+        <form className="flex" onSubmit={handleSubmit}>
+          <input
+            type="text"
+            id="title"
+            className=" border border-indigo-300 text-indigo-900 text-sm rounded-lg focus:ring-indigo-500 focus:border-indigo-500 block w-full p-2.5"
+            placeholder="Search"
+            onChange={(e) => setValue(e.target.value)}
+          />
+          <button className="text-white bg-indigo-700 hover:bg-indigo-800 focus:ring-4 focus:outline-none focus:ring-indigo-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-indigo-600 dark:hover:bg-indigo-700 dark:focus:ring-indigo-800">
+            Search
+          </button>
+        </form>
+      </div>
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
         {books.map((book) => (
           <div key={book.id} className="bg-white p-4 rounded shadow-md">

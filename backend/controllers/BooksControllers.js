@@ -70,4 +70,23 @@ const updateBookDetails = async (req, res) => {
   }
 };
 
-module.exports = { addBook, getAllBooks, getBook, updateBookDetails };
+const getBookByTitle = async (req, res) => {
+  try {
+    const title = req.body;
+    console.log(title.value);
+    const book = await BookModel.find({
+      title: { $regex: title.value, $options: "i" },
+    });
+    res.status(200).json(book);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
+module.exports = {
+  addBook,
+  getAllBooks,
+  getBook,
+  updateBookDetails,
+  getBookByTitle,
+};
