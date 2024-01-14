@@ -1,6 +1,9 @@
-import React from 'react'
+import React from 'react';
+import { Link } from 'react-router-dom';
 
 const Home = () => {
+  const jwtTokenCookie = localStorage.getItem('token') || null;
+
   return (
     <div className='bg-white'>
       <div className='relative isolate px-6 pt-14 lg:px-8'>
@@ -29,12 +32,14 @@ const Home = () => {
               >
                 Pregledaj knjige
               </a>
-              <a
-                href='/login'
-                className='text- sm font-semibold leading-6 text-gray-900'
-              >
-                Prijavi se <span aria-hidden='true'>→</span>
-              </a>
+              {!jwtTokenCookie && (
+                <Link
+                  to='/login'
+                  className='text-sm font-semibold leading-6 text-gray-900'
+                >
+                  Prijavi se <span aria-hidden='true'>→</span>
+                </Link>
+              )}
             </div>
           </div>
         </div>
@@ -46,7 +51,7 @@ const Home = () => {
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default Home
+export default Home;
