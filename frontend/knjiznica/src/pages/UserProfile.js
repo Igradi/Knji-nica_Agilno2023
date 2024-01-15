@@ -10,6 +10,8 @@ const UserProfile = () => {
     email: "",
   });
 
+  const [userBooks, setUserBooks] = useState([]);
+
   const { userId } = useParams();
 
   useEffect(() => {
@@ -29,7 +31,19 @@ const UserProfile = () => {
       }
     };
 
+    const fetchUserBooks = async () => {
+      try {
+        const response = await axios.get(
+          `http://localhost:4000/user/${userId}/books`
+        );
+        setUserBooks(response.data);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
     fetchUserData();
+    fetchUserBooks();
   }, [userId]);
 
   const handleUpdate = async (e) => {
@@ -70,7 +84,6 @@ const UserProfile = () => {
 
   return (
     <div className="bg-gray-200 min-h-screen p-24">
-      <header className="px-6 bg-white flex flex-wrap items-center lg:py-0 py-2"></header>
       <div className="container mx-auto max-w-3xl mt-8">
         <div className="w-full bg-white rounded-lg mx-auto mt-8 flex overflow-hidden rounded-b-none">
           <div className="w-1/3 bg-gray-100 p-8 hidden md:inline-block">
@@ -157,9 +170,28 @@ const UserProfile = () => {
             </div>
           </div>
         </div>
+
+        {/* Prikaz knjiga koje je korisnik iznajmio */}
+        <div className="p-8 mt-8">
+          <h2 className="text-2xl font-bold mb-6">Knjige koje ste iznajmili</h2>
+          {userBooks.length > 0 ? (
+            <ul>
+              {userBooks.map((book) => (
+                <li key={book._id}>
+                  <h3 className="text-lg font-semibold">{book.title}</h3>
+                  <p>{book.authorName} {book.authorLastName}</p>
+                  {/* Dodaj ostale informacije koje želiš prikazati */}
+                </li>
+              ))}
+            </ul>
+          ) : (
+            <p>Trenutno nema iznajmljenih knjiga.</p>
+          )}
+        </div>
       </div>
     </div>
   );
 };
 
 export default UserProfile;
+

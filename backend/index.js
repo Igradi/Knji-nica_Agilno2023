@@ -13,6 +13,7 @@ const updateUserByIdRoute = require('./routes/UpdateUserById')
 const getBook = require('./routes/GetBook')
 const updateBookDetails = require('./routes/UpdateBookDetails')
 const addBookAndUser = require('./routes/AddBookUser')
+const getUserBooks = require('./routes/GetUserBooks')
 
 const app = express()
 
@@ -50,3 +51,4 @@ app.use('/', getAllBooksRoute)
 app.use('/', getBook)
 app.use('/', updateBookDetails)
 app.use('/', addBookAndUser)
+app.use('/', getUserBooks)

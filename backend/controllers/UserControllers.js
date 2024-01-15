@@ -1,5 +1,6 @@
 const UserBookModel = require('../models/UserBookModel')
 const UserModel = require('../models/UserModel')
+const BookModel = require("../models/BookModel");
 const jwt = require('jsonwebtoken')
 
 const PRIVATE_KEY = 'AGILNO'
@@ -142,7 +143,7 @@ const updateUserById = async (req, res) => {
 
 const addBookAndUser = async (req, res) => {
   try {
-    const {idUser, idBook} = req.body
+    const { idUser, idBook } = req.body
 
     const bookUser = await UserBookModel.create({
       idUser,
@@ -157,6 +158,23 @@ const addBookAndUser = async (req, res) => {
   }
 }
 
+const getUserBooks = async (req, res) => {
+  try {
+    const userId = req.params.userId;
+
+    const userBooks = await UserBookModel.find({ idUser: userId });
+
+    const uniqueBooks = [...new Set(userBooks.map(item => item.idBook))];
+
+    const booksDetails = await BookModel.find({ _id: { $in: uniqueBooks } });
+
+    res.status(200).json(booksDetails);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
+
 module.exports = {
   register,
   login,
@@ -165,4 +183,5 @@ module.exports = {
   deleteUserById,
   updateUserById,
   addBookAndUser,
+  getUserBooks,
 }
