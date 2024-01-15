@@ -80,6 +80,35 @@ const UserProfile = () => {
     }
   };
 
+  const handleReturnBook = async (bookId) => {
+    try {
+      const response = await axios.post(
+        "http://localhost:4000/returnbook",
+        {
+          userId: userId,
+          bookId: bookId,
+        }
+      );
+
+      toast.success(response.data.message, {
+        position: "top-center",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+        transition: Bounce,
+      });
+
+      const updatedUserBooks = userBooks.filter((book) => book._id !== bookId);
+      setUserBooks(updatedUserBooks);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   const { firstName, lastName, email } = userData;
 
   return (
@@ -171,23 +200,36 @@ const UserProfile = () => {
           </div>
         </div>
 
-        {/* Prikaz knjiga koje je korisnik iznajmio */}
         <div className="p-8 mt-8">
           <h2 className="text-2xl font-bold mb-6">Knjige koje ste iznajmili</h2>
           {userBooks.length > 0 ? (
-            <ul>
+            <ul className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
               {userBooks.map((book) => (
-                <li key={book._id}>
-                  <h3 className="text-lg font-semibold">{book.title}</h3>
-                  <p>{book.authorName} {book.authorLastName}</p>
-                  {/* Dodaj ostale informacije koje želiš prikazati */}
+                <li key={book._id} className="bg-white rounded-lg overflow-hidden shadow-md">
+                  <img
+                    src={book.image}
+                    alt={book.title}
+                    className="w-full h-40 object-cover"
+                  />
+
+                  <div className="p-4">
+                    <h3 className="text-lg font-semibold mb-2">{book.title}</h3>
+                    <p className="text-gray-600">{book.authorName} {book.authorLastName}</p>
+                    <button
+                      onClick={() => handleReturnBook(book._id)}
+                      className="bg-indigo-700 text-white px-3 py-1 mt-2 rounded"
+                    >
+                      Vrati knjigu
+                    </button>
+                  </div>
                 </li>
               ))}
             </ul>
           ) : (
-            <p>Trenutno nema iznajmljenih knjiga.</p>
+            <p className="text-gray-600">Trenutno nema iznajmljenih knjiga.</p>
           )}
         </div>
+
       </div>
     </div>
   );

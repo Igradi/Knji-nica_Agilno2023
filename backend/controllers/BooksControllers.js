@@ -1,4 +1,5 @@
 const BookModel = require("../models/BookModel");
+const UserBookModel = require("../models/UserBookModel");
 
 const addBook = async (req, res) => {
   try {
@@ -83,10 +84,31 @@ const getBookByTitle = async (req, res) => {
   }
 };
 
+const returnBook = async (req, res) => {
+  try {
+    const { userId, bookId } = req.body;
+
+    const userBook = await UserBookModel.findOneAndDelete({
+      idUser: userId,
+      idBook: bookId,
+    });
+
+    if (!userBook) {
+      return res.status(404).json({ message: "Knjiga nije pronađena ili nije iznajmljena od strane korisnika." });
+    }
+
+    res.status(200).json({ message: "Knjiga uspješno vraćena." });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: error.message });
+  }
+};
+
 module.exports = {
   addBook,
   getAllBooks,
   getBook,
   updateBookDetails,
   getBookByTitle,
+  returnBook,
 };
