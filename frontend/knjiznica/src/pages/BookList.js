@@ -21,21 +21,23 @@ export function BookList() {
     fetchBooks()
   }, [])
 
-  //   const handleDelete = async (userId) => {
-  //     const confirmDelete = window.confirm('Are you sure you want to delete this book?');
-  //     if (!confirmDelete) {
-  //         return;
-  //     }
+  const handleDelete = async (bookId) => {
+    const confirmDelete = window.confirm(
+      'Are you sure you want to delete this book?'
+    )
+    if (!confirmDelete) {
+      return
+    }
 
-  //     try {
-  //         await axios.delete(`http://localhost:4000/users/${userId}`);
-  //         setUsers(users.filter((user) => user._id !== userId));
-  //         toast.success('User deleted successfully');
-  //     } catch (error) {
-  //         console.log(error);
-  //         toast.error('Failed to delete user');
-  //     }
-  // };
+    try {
+      await axios.delete(`http://localhost:4000/books/${bookId}`)
+      setBooks(books.filter((book) => book._id !== bookId))
+      toast.success('Uspješno ste izbrisali knjigu!')
+    } catch (error) {
+      console.log(error)
+      toast.error('Failed to delete user')
+    }
+  }
 
   const handleSubmit = async (e) => {
     e.preventDefault()
@@ -88,7 +90,7 @@ export function BookList() {
           backgroundImage:
             'linear-gradient(to right, #34D399, #3B82F6, #8B5CF6)',
         }}
-        className="text-3xl font-bold mb-4 text-center h-[50px]"
+        className='text-3xl font-bold mb-4 text-center h-[50px]'
       >
         Pregled svih knjiga
       </h1>
@@ -101,7 +103,7 @@ export function BookList() {
             placeholder='Search'
             onChange={(e) => setValue(e.target.value)}
           />
-          <button className="text-white bg-indigo-700 hover:bg-indigo-800 focus:ring-4 focus:outline-none focus:ring-indigo-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-indigo-600 dark:hover:bg-indigo-700 dark:focus:ring-indigo-800 mx-4">
+          <button className='text-white bg-indigo-700 hover:bg-indigo-800 focus:ring-4 focus:outline-none focus:ring-indigo-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-indigo-600 dark:hover:bg-indigo-700 dark:focus:ring-indigo-800 mx-4'>
             Search
           </button>
         </form>
@@ -123,21 +125,22 @@ export function BookList() {
               >
                 Detalji
               </button>
-
-              <button
-                className='bg-green-500 hover:bg-green-600 text-white px-3 py-2 rounded-full focus:outline-none'
-                onClick={() => handleOnClick(localStorage.userId, book._id)}
-              >
-                Iznajmi
-              </button>
-
-              {/* samo za rolu knjiznicar */}
-              {/* <button
-                className='bg-red-500 hover:bg-red-600 text-white px-3 py-2 rounded-full focus:outline-none'
-                // onClick={() => handleDelete(book._id)}
-              >
-                <FaTrash />
-              </button>  */}
+              {localStorage.role === 'user' && (
+                <button
+                  className='bg-green-500 hover:bg-green-600 text-white px-3 py-2 rounded-full focus:outline-none'
+                  onClick={() => handleOnClick(localStorage.userId, book._id)}
+                >
+                  Iznajmi
+                </button>
+              )}
+              {localStorage.role === 'knjiznicar' && (
+                <button
+                  className='bg-red-500 hover:bg-red-600 text-white px-3 py-2 rounded-full focus:outline-none'
+                  onClick={() => handleDelete(book._id)}
+                >
+                  Izbriši
+                </button>
+              )}
             </div>
           </div>
         ))}

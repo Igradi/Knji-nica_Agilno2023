@@ -1,20 +1,24 @@
-import React from 'react';
-import markoMarulic from '../images/markoMarulic.png';
-import { Link } from 'react-router-dom';
+import React from 'react'
+import markoMarulic from '../images/markoMarulic.png'
+import { Link } from 'react-router-dom'
 
 const Navbar = () => {
-  const jwtTokenCookie = localStorage.getItem('token') || null;
-  const role = localStorage.getItem('role');
+  const jwtTokenCookie = localStorage.getItem('token') || null
+  const role = localStorage.getItem('role')
 
   const handleOdjava = () => {
-    localStorage.removeItem('token');
-    localStorage.removeItem('role');
-    localStorage.removeItem('userId');
-  };
+    localStorage.removeItem('token')
+    localStorage.removeItem('role')
+    localStorage.removeItem('userId')
+    window.location.reload()
+  }
 
   return (
     <header className='absolute inset-x-0 top-0 z-50'>
-      <nav className='flex items-center justify-between p-6 lg:px-8' aria-label='Global'>
+      <nav
+        className='flex items-center justify-between p-6 lg:px-8'
+        aria-label='Global'
+      >
         <div className='flex lg:flex-1'>
           <a href='#' className='-m-1.5 p-1.5'>
             <span className='sr-only'>Knjižnica Marko Marulić</span>
@@ -40,7 +44,11 @@ const Navbar = () => {
               stroke='currentColor'
               aria-hidden='true'
             >
-              <path strokeLinecap='round' strokeLinejoin='round' d='M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5' />
+              <path
+                strokeLinecap='round'
+                strokeLinejoin='round'
+                d='M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5'
+              />
             </svg>
           </button>
         </div>
@@ -50,11 +58,17 @@ const Navbar = () => {
           </a>
           {jwtTokenCookie && (
             <>
-              <a href='/books' className='text-sm font-semibold leading-6 text-gray-900'>
+              <a
+                href='/books'
+                className='text-sm font-semibold leading-6 text-gray-900'
+              >
                 Knjige
               </a>
               {['admin', 'knjiznicar'].includes(role) && (
-                <a href='/addbook' className='text-sm font-semibold leading-6 text-gray-900'>
+                <a
+                  href='/addbook'
+                  className='text-sm font-semibold leading-6 text-gray-900'
+                >
                   Dodaj knjigu
                 </a>
               )}
@@ -63,10 +77,17 @@ const Navbar = () => {
         </div>
         {!jwtTokenCookie ? (
           <div className='hidden lg:flex lg:flex-1 lg:justify-end'>
-            <a href='/register' className='text-sm font-semibold leading-6 text-gray-900'>
-              Registracija <span aria-hidden='true' style={{ marginRight: '10px' }}></span>
+            <a
+              href='/register'
+              className='text-sm font-semibold leading-6 text-gray-900'
+            >
+              Registracija{' '}
+              <span aria-hidden='true' style={{ marginRight: '10px' }}></span>
             </a>
-            <a href='/login' className='text-sm font-semibold leading-6 text-gray-900'>
+            <a
+              href='/login'
+              className='text-sm font-semibold leading-6 text-gray-900'
+            >
               Prijava <span aria-hidden='true'>→</span>
             </a>
           </div>
@@ -163,7 +184,7 @@ const Navbar = () => {
         </div>
       </div>
     </header>
-  );
-};
+  )
+}
 
-export default Navbar;
+export default Navbar
